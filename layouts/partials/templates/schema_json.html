@@ -29,12 +29,14 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
   {{- range $index, $element := $bc_list }}
+   
 
     {{- $scratch.Add "path" (printf "%s/" $element ) | safeJS }}
     {{- $bc_pg := site.GetPage ($scratch.Get "path") -}}
 
+
     {{- if (and ($bc_pg) (gt (len . ) 0))}}
-    {{- if (and $index)}}, {{end }}
+    {{- if (gt $index 1) }}, {{end }}
     {
       "@type": "ListItem",
       "position": {{ add 1 $index  }},
@@ -45,7 +47,7 @@
 
   {{- end }}
   {{- /*  self-page addition  */ -}}
-  {{- if (ge (len $bc_list) 2) }}, {{end }}
+  {{- if (gt (len $bc_list) 2) }}, {{end }}
     {
       "@type": "ListItem",
       "position": {{len $bc_list}},
